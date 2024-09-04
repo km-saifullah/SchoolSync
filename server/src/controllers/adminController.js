@@ -1,12 +1,21 @@
 import Admin from '../models/adminModel.js'
 import apiResponse from 'quick-response'
+import { signToken } from '../utils/signToken.js'
 
 // @desc  Get all admin
 // @route GET /api/v1/admin/
 const getAllAdmin = async (req, res) => {
   try {
-    return res.send('All Admins')
-  } catch (error) {}
+    const admins = await Admin.find()
+    return res.status(200).json(
+      apiResponse(200, 'all admins', {
+        admin: admins,
+        result: admins.length,
+      })
+    )
+  } catch (error) {
+    return res.status(500).json({ status: 'fail', message: `${error.message}` })
+  }
 }
 
 // @desc  Get a single admin
@@ -43,7 +52,10 @@ const createAdmin = async (req, res) => {
       phone: phone,
       role: role,
     })
-    return res.status(201).json(apiResponse(201, 'User created', { newUser }))
+    const token = signToken(newUser._id)
+    return res
+      .status(201)
+      .json(apiResponse(201, 'User created', { data: newUser, token: token }))
   } catch (error) {
     return res.status(500).json({ status: 'fail', message: `${error.message}` })
   }

@@ -35,6 +35,7 @@ const adminSchema = new Schema(
   }
 )
 
+// hash password
 adminSchema.pre('save', async function (next) {
   // only run thus function if password was actually modified
   if (!this.isModified('password')) return next()
@@ -43,6 +44,14 @@ adminSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, 12)
   next()
 })
+
+// check password is correct or not
+adminSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword)
+}
 
 const Admin = mongoose.model('Admin', adminSchema)
 
