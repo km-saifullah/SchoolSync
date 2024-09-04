@@ -1,9 +1,13 @@
 import express from 'express'
+import adminRoute from './routes/adminRoute.js'
 
 const app = express()
 
 // middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// routes
+app.use('/api/v1/admins', adminRoute)
 
 export default app
