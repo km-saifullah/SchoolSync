@@ -1,8 +1,8 @@
-const { configDotenv } = require("dotenv")
+import { configDotenv } from 'dotenv'
 
 configDotenv()
 
 const serverPort = process.env.PORT
 const dbUrl = process.env.DATABASE_URL
 
-module.exports = { serverPort, dbUrl }
+export { serverPort, dbUrl }
