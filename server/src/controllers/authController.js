@@ -16,9 +16,10 @@ export const signIn = async (req, res, next) => {
     }
 
     // check if the admin exist or not
-    const admin = await Admin.findOne({ email: email })
+    const admin = await Admin.findOne({ email })
+    console.log(admin)
 
-    if (!admin || (await admin.correctPassword(password, admin.password))) {
+    if (!admin || !(await admin.correctPassword(password, admin.password))) {
       return res
         .status(401)
         .json(apiResponse(401, 'Incorrect email or password'))
