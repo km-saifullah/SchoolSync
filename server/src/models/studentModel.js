@@ -10,7 +10,7 @@ const studentSchema = new Schema(
       type: String,
       required: true,
     },
-    class: {
+    studentClass: {
       type: String,
       required: true,
     },
@@ -30,7 +30,7 @@ const studentSchema = new Schema(
     password: {
       type: String,
       required: true,
-      maxlength: 8,
+      minlength: 8,
     },
     role: {
       type: String,
