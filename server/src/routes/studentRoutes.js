@@ -4,12 +4,12 @@ import {
   deleteStudent,
   getStudent,
   getStudents,
+  updateStudent,
 } from '../controllers/studentController.js'
-import { updateAdmin } from '../controllers/adminController.js'
 
 const router = Router()
 
 router.route('/').get(getStudents).post(addStudent)
-router.route('/:id').get(getStudent).patch(updateAdmin).delete(deleteStudent)
+router.route('/:id').get(getStudent).patch(updateStudent).delete(deleteStudent)
 
 export default router

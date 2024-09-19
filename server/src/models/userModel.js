@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 
-const adminSchema = new Schema(
+const userSchema = new Schema(
   {
     fullname: {
       type: String,
@@ -36,7 +36,7 @@ const adminSchema = new Schema(
 )
 
 // hash password
-adminSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   // only run thus function if password was actually modified
   if (!this.isModified('password')) return next()
 
@@ -46,13 +46,13 @@ adminSchema.pre('save', async function (next) {
 })
 
 // check password is correct or not
-adminSchema.methods.correctPassword = async function (
+userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword)
 }
 
-const Admin = mongoose.model('Admin', adminSchema)
+const User = mongoose.model('User', userSchema)
 
-export default Admin
+export default User

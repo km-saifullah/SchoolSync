@@ -1,16 +1,16 @@
-import Admin from '../models/adminModel.js'
+import User from '../models/userModel.js'
 import apiResponse from 'quick-response'
 import { signToken } from '../utils/signToken.js'
 
-// @desc  Get all admin
-// @route GET /api/v1/admin/
-const getAllAdmin = async (req, res) => {
+// @desc  Get all user
+// @route GET /api/v1/user/
+const getAllUsers = async (req, res) => {
   try {
-    const admins = await Admin.find()
+    const users = await User.find()
     return res.status(200).json(
-      apiResponse(200, 'all admins', {
-        admin: admins,
-        result: admins.length,
+      apiResponse(200, 'all users', {
+        admin: users,
+        result: users.length,
       })
     )
   } catch (error) {
@@ -18,13 +18,13 @@ const getAllAdmin = async (req, res) => {
   }
 }
 
-// @desc  Get a single admin
-// @route GET /api/v1/admin/:id
-const getAdmin = async (req, res) => {}
+// @desc  Get a single user
+// @route GET /api/v1/user/:id
+const getUser = async (req, res) => {}
 
-// @desc  Create an admin
-// @route POST /api/v1/admin/
-const createAdmin = async (req, res) => {
+// @desc  Create an user
+// @route POST /api/v1/user/
+const createUser = async (req, res) => {
   try {
     const { fullname, email, password, phone, role } = req.body
 
@@ -38,14 +38,14 @@ const createAdmin = async (req, res) => {
         .json({ status: 'fail', message: 'please enter all required fields' })
     }
 
-    // check admin is already exist or not
-    const findAdmin = await Admin.findOne({ email: email })
-    if (findAdmin !== null) {
+    // check user is already exist or not
+    const userFound = await User.findOne({ email: email })
+    if (userFound !== null) {
       return res.status(400).json(apiResponse(400, 'Email already exist'))
     }
 
-    // create new admin
-    const newUser = await Admin.create({
+    // create new user
+    const newUser = await User.create({
       fullname: fullname,
       email: email,
       password: password,
@@ -61,12 +61,12 @@ const createAdmin = async (req, res) => {
   }
 }
 
-// @desc  Update an admin
-// @route PATCH /api/v1/admin/:id
-const updateAdmin = async (req, res) => {}
+// @desc  Update an user
+// @route PATCH /api/v1/user/:id
+const updateUser = async (req, res) => {}
 
-// @desc  Delete an admin
-// @route DELETE /api/v1/admin/:id
-const deleteAdmin = async (req, res) => {}
+// @desc  Delete an user
+// @route DELETE /api/v1/user/:id
+const deleteUser = async (req, res) => {}
 
-export { getAllAdmin, createAdmin, updateAdmin, deleteAdmin, getAdmin }
+export { getAllUsers, createUser, updateUser, deleteUser, getUser }
