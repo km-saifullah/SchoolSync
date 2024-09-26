@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import userRoute from './routes/userRoute.js'
 import studentRouter from './routes/studentRoutes.js'
+import courseRouter from './routes/courseRoutes.js'
 
 const app = express()
 
@@ -13,5 +14,6 @@ app.use(cors({ origin: '*' }))
 // routes
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/student', studentRouter)
+app.use('/api/v1/course', courseRouter)
 
 export default app
