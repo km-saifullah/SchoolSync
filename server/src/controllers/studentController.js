@@ -16,6 +16,25 @@ const getStudents = async (req, res) => {
   }
 }
 
+// @desc  get students by section + class
+// @route api/v1/student/searchstudents
+const getStudentsByClassAndSection = async (req, res) => {
+  try {
+    const { studentclass, section } = req.headers
+
+    const studentsBySectionAndClass = await Student.find({
+      studentClass: studentclass,
+      section: section,
+    })
+
+    return res
+      .status(200)
+      .json(apiResponse(200, 'Success', { studentsBySectionAndClass }))
+  } catch (error) {
+    return res.status(500).json({ status: 'fail', message: `${error.message}` })
+  }
+}
+
 // @desc  Get all Students
 // @route api/v1/student/:id
 const getStudent = async (req, res) => {}
@@ -103,4 +122,11 @@ const updateStudent = async (req, res) => {}
 // @route api/v1/student/:id
 const deleteStudent = async (req, res) => {}
 
-export { getStudents, getStudent, addStudent, updateStudent, deleteStudent }
+export {
+  getStudents,
+  getStudent,
+  addStudent,
+  updateStudent,
+  deleteStudent,
+  getStudentsByClassAndSection,
+}
