@@ -18,6 +18,22 @@ const getAllUsers = async (req, res) => {
   }
 }
 
+// @desc  Get all teachers
+// @route GET /api/v1/teacher
+const getTeachers = async (req, res) => {
+  try {
+    const teachers = await User.find({ role: 'teacher' })
+    return res.status(200).json(
+      apiResponse(200, 'All teachers list', {
+        teacher: teachers,
+        result: teachers.length,
+      })
+    )
+  } catch (error) {
+    return res.status(500).json({ status: 'fail', message: `${error.message}` })
+  }
+}
+
 // @desc  Get a single user
 // @route GET /api/v1/user/:id
 const getUser = async (req, res) => {}
@@ -69,4 +85,4 @@ const updateUser = async (req, res) => {}
 // @route DELETE /api/v1/user/:id
 const deleteUser = async (req, res) => {}
 
-export { getAllUsers, createUser, updateUser, deleteUser, getUser }
+export { getAllUsers, createUser, updateUser, deleteUser, getUser, getTeachers }
