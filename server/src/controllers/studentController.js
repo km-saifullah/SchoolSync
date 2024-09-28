@@ -6,7 +6,7 @@ import apiResponse from 'quick-response'
 const getStudents = async (req, res) => {
   try {
     const students = await Student.find()
-    res
+    return res
       .status(200)
       .json(
         apiResponse(200, 'All Students', { students, results: students.length })
@@ -27,9 +27,13 @@ const getStudentsByClassAndSection = async (req, res) => {
       section: section,
     })
 
+    if (!studentsBySectionAndClass) {
+      return res.status(404).json(apiResponse(404, 'no students found'))
+    }
+
     return res
       .status(200)
-      .json(apiResponse(200, 'Success', { studentsBySectionAndClass }))
+      .json(apiResponse(200, 'success', { studentsBySectionAndClass }))
   } catch (error) {
     return res.status(500).json({ status: 'fail', message: `${error.message}` })
   }
@@ -37,7 +41,23 @@ const getStudentsByClassAndSection = async (req, res) => {
 
 // @desc  Get all Students
 // @route api/v1/student/:id
-const getStudent = async (req, res) => {}
+const getStudentById = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const studentFound = await Student.findById({ _id: id })
+
+    if (!studentFound) {
+      return res
+        .status(404)
+        .json(apiResponse(404, 'no student found by this id'))
+    }
+
+    return res
+      .status(200)
+      .json(apiResponse(200, 'student found by this id', { studentFound }))
+  } catch (error) {}
+}
 
 // @desc  Get all Students
 // @route api/v1/student
@@ -124,7 +144,7 @@ const deleteStudent = async (req, res) => {}
 
 export {
   getStudents,
-  getStudent,
+  getStudentById,
   addStudent,
   updateStudent,
   deleteStudent,

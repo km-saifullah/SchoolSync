@@ -2,7 +2,7 @@ import { Router } from 'express'
 import {
   addStudent,
   deleteStudent,
-  getStudent,
+  getStudentById,
   getStudents,
   getStudentsByClassAndSection,
   updateStudent,
@@ -12,6 +12,10 @@ const router = Router()
 
 router.route('/').get(getStudents).post(addStudent)
 router.route('/searchstudents').get(getStudentsByClassAndSection)
-router.route('/:id').get(getStudent).patch(updateStudent).delete(deleteStudent)
+router
+  .route('/:id')
+  .get(getStudentById)
+  .patch(updateStudent)
+  .delete(deleteStudent)
 
 export default router
