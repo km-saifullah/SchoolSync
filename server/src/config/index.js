@@ -8,4 +8,6 @@ const dbUrl = process.env.DATABASE_URL
 const jwtSecret = process.env.JWT_SECRET
 const jwtExpires = process.env.JWT_EXPIRES
 
-export { serverPort, dbUrl, jwtSecret, jwtExpires }
+const cloudinaryApiKey = process.env.CLOUDINARY_API_KEY
+
+export { serverPort, dbUrl, jwtSecret, jwtExpires, cloudinaryApiKey }

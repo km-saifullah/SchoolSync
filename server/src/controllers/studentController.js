@@ -1,5 +1,6 @@
 import Student from '../models/studentModel.js'
 import apiResponse from 'quick-response'
+import cloudinaryUpload from '../services/cloudinaryUpload.js'
 
 // @desc  Get all Students
 // @route api/v1/student
@@ -136,7 +137,36 @@ const addStudent = async (req, res) => {
 
 // @desc  Get all Students
 // @route api/v1/student/:id
-const updateStudent = async (req, res) => {}
+const updateStudent = async (req, res) => {
+  try {
+    console.log(req.file)
+    // check file uploaded or not
+    if (req.file) {
+      const { path } = req.file
+      const user = await Student.findById('66db3d5d3567141273a10654')
+      console.log(user)
+
+      const cloudinaryImage = await cloudinaryUpload(
+        path,
+        user.firstName,
+        'avatar'
+      )
+      console.log(cloudinaryImage)
+      // cloudinaryImage.optimizeUrl || cloudinaryImage.uploadResult || cloudinaryImage.uploadResult.public_id
+      user.profileImage = cloudinaryImage.optimizeUrl
+      user.publicId = cloudinaryImage.uploadResult.public_id
+      await user.save()
+
+      return res
+        .status(200)
+        .json(apiResponse(200, 'profile image upload successfully'))
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json(apiResponse(500, 'internal server error', { error: error.message }))
+  }
+}
 
 // @desc  Get all Students
 // @route api/v1/student/:id

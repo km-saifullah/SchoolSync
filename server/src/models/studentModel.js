@@ -46,6 +46,8 @@ const studentSchema = new Schema(
       type: String,
       required: true,
     },
+    profileImage: String,
+    publicId: String,
     address: {
       type: String,
       required: true,

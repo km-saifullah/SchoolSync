@@ -7,6 +7,7 @@ import {
   getStudentsByClassAndSection,
   updateStudent,
 } from '../controllers/studentController.js'
+import upload from '../middlewares/multerMiddleware.js'
 
 const router = Router()
 
@@ -15,7 +16,7 @@ router.route('/searchstudents').get(getStudentsByClassAndSection)
 router
   .route('/:id')
   .get(getStudentById)
-  .patch(updateStudent)
+  .patch(upload.single('avatar'), updateStudent)
   .delete(deleteStudent)
 
 export default router
