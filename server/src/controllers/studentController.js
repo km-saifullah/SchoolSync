@@ -111,7 +111,7 @@ const addStudent = async (req, res) => {
     }
 
     // create new student
-    const newUser = await Student.create({
+    const newStudent = await Student.create({
       firstName: firstName,
       lastName: lastName,
       studentClass: studentClass,
@@ -129,13 +129,13 @@ const addStudent = async (req, res) => {
     // const token = signToken(newUser._id)
     return res
       .status(201)
-      .json(apiResponse(201, 'Student created', { data: newUser }))
+      .json(apiResponse(201, 'Student created', { newStudent }))
   } catch (error) {
     return res.status(500).json({ status: 'fail', message: `${error.message}` })
   }
 }
 
-// @desc  Get all Students
+// @desc  update student information
 // @route api/v1/student/:id
 const updateStudent = async (req, res) => {
   try {
