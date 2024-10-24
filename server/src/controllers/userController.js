@@ -6,11 +6,11 @@ import { signToken } from '../utils/signToken.js'
 // @route GET /api/v1/user/
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find()
+    const users = await User.find({})
     return res.status(200).json(
-      apiResponse(200, 'all users', {
-        admin: users,
-        result: users.length,
+      apiResponse(200, 'all users fetched successfully', {
+        users: users,
+        results: users.length,
       })
     )
   } catch (error) {
@@ -24,9 +24,9 @@ const getTeachers = async (req, res) => {
   try {
     const teachers = await User.find({ role: 'teacher' })
     return res.status(200).json(
-      apiResponse(200, 'All teachers list', {
-        teacher: teachers,
-        result: teachers.length,
+      apiResponse(200, 'all teachers fetched successfully', {
+        teachers: teachers,
+        results: teachers.length,
       })
     )
   } catch (error) {
@@ -69,9 +69,12 @@ const createUser = async (req, res) => {
       role: role,
     })
     const token = signToken(newUser._id)
-    return res
-      .status(201)
-      .json(apiResponse(201, 'User created', { data: newUser, token: token }))
+    return res.status(201).json(
+      apiResponse(201, 'user created successfully', {
+        data: newUser,
+        token: token,
+      })
+    )
   } catch (error) {
     return res.status(500).json({ status: 'fail', message: `${error.message}` })
   }
