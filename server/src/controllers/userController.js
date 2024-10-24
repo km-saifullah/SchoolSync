@@ -36,7 +36,26 @@ const getTeachers = async (req, res) => {
 
 // @desc  Get a single user
 // @route GET /api/v1/user/:id
-const getUser = async (req, res) => {}
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.body
+
+    const user = await User.findById({ _id: id })
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: 'fail', message: 'sorry! the user does not exist' })
+    }
+
+    return res.status(200).json(
+      apiResponse(200, 'fetched user by id', {
+        user: user,
+      })
+    )
+  } catch (error) {
+    return res.status(500).json({ status: 'fail', message: `${error.message}` })
+  }
+}
 
 // @desc  Create an user
 // @route POST /api/v1/user/
@@ -88,4 +107,11 @@ const updateUser = async (req, res) => {}
 // @route DELETE /api/v1/user/:id
 const deleteUser = async (req, res) => {}
 
-export { getAllUsers, createUser, updateUser, deleteUser, getUser, getTeachers }
+export {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getUserById,
+  getTeachers,
+}
