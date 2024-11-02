@@ -14,9 +14,9 @@ app.use(express.static('./public'))
 app.use(cors({ origin: '*' }))
 
 // routes
-app.use('/api/v1/user', userRoute)
-app.use('/api/v1/student', studentRouter)
-app.use('/api/v1/course', courseRouter)
-app.use('/api/v1/teacher', teacherRouter)
+app.use('/api/v1/users', userRoute)
+app.use('/api/v1/students', studentRouter)
+app.use('/api/v1/courses', courseRouter)
+app.use('/api/v1/teachers', teacherRouter)
 
 export default app
